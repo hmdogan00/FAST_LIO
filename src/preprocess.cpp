@@ -372,7 +372,7 @@ void Preprocess::pandar_handler(const sensor_msgs::PointCloud2::ConstPtr &msg)
   std::vector<float> time_last(N_SCANS, 0.0);  // last offset time
   /*****************************************************************/
 
-  if (pl_orig.points[plsize - 1].time > 0) {
+  if (pl_orig.points[plsize - 1].timestamp > 0) {
     given_offset_time = true;
   }
   else {
@@ -406,7 +406,7 @@ void Preprocess::pandar_handler(const sensor_msgs::PointCloud2::ConstPtr &msg)
       added_pt.y = pl_orig.points[i].y;
       added_pt.z = pl_orig.points[i].z;
       added_pt.intensity = pl_orig.points[i].intensity;
-      added_pt.curvature = pl_orig.points[i].time * time_unit_scale; // units: ms
+      added_pt.curvature = pl_orig.points[i].timestamp * time_unit_scale; // units: ms
 
       if (!given_offset_time) {
         double yaw_angle = atan2(added_pt.y, added_pt.x) * 57.2957;
@@ -466,7 +466,7 @@ void Preprocess::pandar_handler(const sensor_msgs::PointCloud2::ConstPtr &msg)
       added_pt.y = pl_orig.points[i].y;
       added_pt.z = pl_orig.points[i].z;
       added_pt.intensity = pl_orig.points[i].intensity;
-      added_pt.curvature = pl_orig.points[i].time * time_unit_scale;  // curvature unit: ms // cout<<added_pt.curvature<<endl; !!!!!time_unit_scale
+      added_pt.curvature = pl_orig.points[i].timestamp * time_unit_scale;  // curvature unit: ms // cout<<added_pt.curvature<<endl; !!!!!time_unit_scale
 
       if (!given_offset_time) {
         int layer = pl_orig.points[i].ring;

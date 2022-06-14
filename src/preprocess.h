@@ -83,7 +83,7 @@ namespace pandar_ros {
   struct EIGEN_ALIGN16 Point {
       PCL_ADD_POINT4D;
       float intensity;
-      float time;
+      double timestamp;
       uint16_t ring;
       EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   };
@@ -93,7 +93,7 @@ POINT_CLOUD_REGISTER_POINT_STRUCT(pandar_ros::Point,
     (float, y, y)
     (float, z, z)
     (float, intensity, intensity)
-    (float, time, time)
+    (double, timestamp, timestamp)
     (uint16_t, ring, ring)
 )
 

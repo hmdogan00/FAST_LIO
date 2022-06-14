@@ -37,6 +37,7 @@
 #include <math.h>
 #include <thread>
 #include <fstream>
+#include <ostream>
 #include <csignal>
 #include <unistd.h>
 #include <Python.h>
@@ -846,7 +847,7 @@ int main(int argc, char** argv)
 
             if (feats_undistort->empty() || (feats_undistort == NULL))
             {
-                ROS_WARN("No point, skip this scan!\n");
+                ROS_WARN("No point, skip this scan! - feats_undistort empty\n");
                 continue;
             }
 
@@ -877,13 +878,11 @@ int main(int argc, char** argv)
             }
             int featsFromMapNum = ikdtree.validnum();
             kdtree_size_st = ikdtree.size();
-            
-            // cout<<"[ mapping ]: In num: "<<feats_undistort->points.size()<<" downsamp "<<feats_down_size<<" Map num: "<<featsFromMapNum<<"effect num:"<<effct_feat_num<<endl;
 
             /*** ICP and iterated Kalman filter update ***/
             if (feats_down_size < 5)
             {
-                ROS_WARN("No point, skip this scan!\n");
+                ROS_WARN("No point, skip this scan! - feats_down_size < 5\n");
                 continue;
             }
             

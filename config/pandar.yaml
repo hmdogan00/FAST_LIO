@@ -1,28 +1,31 @@
 common:
-    lid_topic:  "/pandar/points"
-    imu_topic:  "/pandar/imu"
+    lid_topic:  "/center/pandar"
+    imu_topic:  "/gps/imu"
     time_sync_en: false         # ONLY turn on when external time synchronization is really not possible
     
 preprocess:
     lidar_type: 4                # 1 for Livox serials LiDAR, 2 for Velodyne LiDAR, 3 for ouster LiDAR, 4 for PanDAR
-    scan_line: 32
+    scan_line: 40
     scan_rate: 10                # only need to be set for velodyne, unit: Hz,
-    timestamp_unit: 2            # the unit of time/t field in the PointCloud2 rostopic: 0-second, 1-milisecond, 2-microsecond, 3-nanosecond.
-    blind: 2
+    timestamp_unit: 3            # the unit of time/t field in the PointCloud2 rostopic: 0-second, 1-milisecond, 2-microsecond, 3-nanosecond.
+    blind: 0.01
 
 mapping:
-    acc_cov: 0.1
-    gyr_cov: 0.1
+    acc_cov: 0.01
+    gyr_cov: 0.01
     b_acc_cov: 0.0001
     b_gyr_cov: 0.0001
     fov_degree:    180
     det_range:     100.0
-    extrinsic_est_en:  false      # true: enable the online estimation of IMU-LiDAR extrinsic,
-    extrinsic_T:  [-1.116, 0.010, -1.224]
-    extrinsic_R:  [ 0.0014287, 0.9987990, -0.0489758,
--0.9980940, -0.0015974, -0.0616917,
--0.0616958, 0.0489706, 0.9968929 ]
+    extrinsic_est_en:  true      # true: enable the online estimation of IMU-LiDAR extrinsic,
+    extrinsics_T : [0.009, 1.116, -1.224]
+    extrinsics_R : [ -0.9999497, 0.0008028, 0.0100006,
+                    -0.0016688, -0.9962165, -0.0868906,
+                    0.0098930, -0.0869029, 0.9961677 ]
 
+    # extrinsics_R : [ 1, 0, 0,
+    #                0, 1, 0,
+    #                0, 0, 1 ]
 publish:
     path_en:  false
     scan_publish_en:  true       # false: close all the point cloud output
@@ -30,6 +33,6 @@ publish:
     scan_bodyframe_pub_en: true  # true: output the point cloud scans in IMU-body-frame
 
 pcd_save:
-    pcd_save_en: true
+    pcd_save_en: false
     interval: -1                 # how many LiDAR frames saved in each pcd file; 
                                  # -1 : all frames will be saved in ONE pcd file, may lead to memory crash when having too much frames.
